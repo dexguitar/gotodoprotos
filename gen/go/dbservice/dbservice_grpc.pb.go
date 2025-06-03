@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	DBService_GetAllTodos_FullMethodName = "/dbservice.DBService/GetAllTodos"
+	DBService_CreateTodo_FullMethodName  = "/dbservice.DBService/CreateTodo"
 )
 
 // DBServiceClient is the client API for DBService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DBServiceClient interface {
 	GetAllTodos(ctx context.Context, in *GetAllTodosRequest, opts ...grpc.CallOption) (*GetAllTodosResponse, error)
+	CreateTodo(ctx context.Context, in *CreateTodoRequest, opts ...grpc.CallOption) (*CreateTodoResponse, error)
 }
 
 type dBServiceClient struct {
@@ -47,11 +49,22 @@ func (c *dBServiceClient) GetAllTodos(ctx context.Context, in *GetAllTodosReques
 	return out, nil
 }
 
+func (c *dBServiceClient) CreateTodo(ctx context.Context, in *CreateTodoRequest, opts ...grpc.CallOption) (*CreateTodoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateTodoResponse)
+	err := c.cc.Invoke(ctx, DBService_CreateTodo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DBServiceServer is the server API for DBService service.
 // All implementations must embed UnimplementedDBServiceServer
 // for forward compatibility.
 type DBServiceServer interface {
 	GetAllTodos(context.Context, *GetAllTodosRequest) (*GetAllTodosResponse, error)
+	CreateTodo(context.Context, *CreateTodoRequest) (*CreateTodoResponse, error)
 	mustEmbedUnimplementedDBServiceServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedDBServiceServer struct{}
 
 func (UnimplementedDBServiceServer) GetAllTodos(context.Context, *GetAllTodosRequest) (*GetAllTodosResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllTodos not implemented")
+}
+func (UnimplementedDBServiceServer) CreateTodo(context.Context, *CreateTodoRequest) (*CreateTodoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTodo not implemented")
 }
 func (UnimplementedDBServiceServer) mustEmbedUnimplementedDBServiceServer() {}
 func (UnimplementedDBServiceServer) testEmbeddedByValue()                   {}
@@ -104,6 +120,24 @@ func _DBService_GetAllTodos_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DBService_CreateTodo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTodoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DBServiceServer).CreateTodo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DBService_CreateTodo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DBServiceServer).CreateTodo(ctx, req.(*CreateTodoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DBService_ServiceDesc is the grpc.ServiceDesc for DBService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var DBService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllTodos",
 			Handler:    _DBService_GetAllTodos_Handler,
+		},
+		{
+			MethodName: "CreateTodo",
+			Handler:    _DBService_CreateTodo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

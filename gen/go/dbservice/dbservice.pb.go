@@ -21,7 +21,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Empty request message - no parameters needed
 type GetAllTodosRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -58,7 +57,6 @@ func (*GetAllTodosRequest) Descriptor() ([]byte, []int) {
 	return file_dbservice_dbservice_proto_rawDescGZIP(), []int{0}
 }
 
-// Response message containing the list of todos
 type GetAllTodosResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Todos         []*Todo                `protobuf:"bytes,1,rep,name=todos,proto3" json:"todos,omitempty"`
@@ -103,7 +101,102 @@ func (x *GetAllTodosResponse) GetTodos() []*Todo {
 	return nil
 }
 
-// Todo message definition
+type CreateTodoRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateTodoRequest) Reset() {
+	*x = CreateTodoRequest{}
+	mi := &file_dbservice_dbservice_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTodoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTodoRequest) ProtoMessage() {}
+
+func (x *CreateTodoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_dbservice_dbservice_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTodoRequest.ProtoReflect.Descriptor instead.
+func (*CreateTodoRequest) Descriptor() ([]byte, []int) {
+	return file_dbservice_dbservice_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *CreateTodoRequest) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *CreateTodoRequest) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+type CreateTodoResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Todo          *Todo                  `protobuf:"bytes,1,opt,name=todo,proto3" json:"todo,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateTodoResponse) Reset() {
+	*x = CreateTodoResponse{}
+	mi := &file_dbservice_dbservice_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTodoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTodoResponse) ProtoMessage() {}
+
+func (x *CreateTodoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_dbservice_dbservice_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTodoResponse.ProtoReflect.Descriptor instead.
+func (*CreateTodoResponse) Descriptor() ([]byte, []int) {
+	return file_dbservice_dbservice_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CreateTodoResponse) GetTodo() *Todo {
+	if x != nil {
+		return x.Todo
+	}
+	return nil
+}
+
 type Todo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -116,7 +209,7 @@ type Todo struct {
 
 func (x *Todo) Reset() {
 	*x = Todo{}
-	mi := &file_dbservice_dbservice_proto_msgTypes[2]
+	mi := &file_dbservice_dbservice_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -128,7 +221,7 @@ func (x *Todo) String() string {
 func (*Todo) ProtoMessage() {}
 
 func (x *Todo) ProtoReflect() protoreflect.Message {
-	mi := &file_dbservice_dbservice_proto_msgTypes[2]
+	mi := &file_dbservice_dbservice_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -141,7 +234,7 @@ func (x *Todo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Todo.ProtoReflect.Descriptor instead.
 func (*Todo) Descriptor() ([]byte, []int) {
-	return file_dbservice_dbservice_proto_rawDescGZIP(), []int{2}
+	return file_dbservice_dbservice_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Todo) GetId() int64 {
@@ -179,14 +272,21 @@ const file_dbservice_dbservice_proto_rawDesc = "" +
 	"\x19dbservice/dbservice.proto\x12\tdbservice\"\x14\n" +
 	"\x12GetAllTodosRequest\"<\n" +
 	"\x13GetAllTodosResponse\x12%\n" +
-	"\x05todos\x18\x01 \x03(\v2\x0f.dbservice.TodoR\x05todos\"Z\n" +
+	"\x05todos\x18\x01 \x03(\v2\x0f.dbservice.TodoR\x05todos\"C\n" +
+	"\x11CreateTodoRequest\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12\x18\n" +
+	"\acontent\x18\x03 \x01(\tR\acontent\"9\n" +
+	"\x12CreateTodoResponse\x12#\n" +
+	"\x04todo\x18\x01 \x01(\v2\x0f.dbservice.TodoR\x04todo\"Z\n" +
 	"\x04Todo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x18\n" +
 	"\acontent\x18\x03 \x01(\tR\acontent\x12\x12\n" +
-	"\x04done\x18\x04 \x01(\bR\x04done2Y\n" +
+	"\x04done\x18\x04 \x01(\bR\x04done2\xa4\x01\n" +
 	"\tDBService\x12L\n" +
-	"\vGetAllTodos\x12\x1d.dbservice.GetAllTodosRequest\x1a\x1e.dbservice.GetAllTodosResponseB$Z\"dexguitar.dbservice.v1;dbservicev1b\x06proto3"
+	"\vGetAllTodos\x12\x1d.dbservice.GetAllTodosRequest\x1a\x1e.dbservice.GetAllTodosResponse\x12I\n" +
+	"\n" +
+	"CreateTodo\x12\x1c.dbservice.CreateTodoRequest\x1a\x1d.dbservice.CreateTodoResponseB$Z\"dexguitar.dbservice.v1;dbservicev1b\x06proto3"
 
 var (
 	file_dbservice_dbservice_proto_rawDescOnce sync.Once
@@ -200,21 +300,26 @@ func file_dbservice_dbservice_proto_rawDescGZIP() []byte {
 	return file_dbservice_dbservice_proto_rawDescData
 }
 
-var file_dbservice_dbservice_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_dbservice_dbservice_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_dbservice_dbservice_proto_goTypes = []any{
 	(*GetAllTodosRequest)(nil),  // 0: dbservice.GetAllTodosRequest
 	(*GetAllTodosResponse)(nil), // 1: dbservice.GetAllTodosResponse
-	(*Todo)(nil),                // 2: dbservice.Todo
+	(*CreateTodoRequest)(nil),   // 2: dbservice.CreateTodoRequest
+	(*CreateTodoResponse)(nil),  // 3: dbservice.CreateTodoResponse
+	(*Todo)(nil),                // 4: dbservice.Todo
 }
 var file_dbservice_dbservice_proto_depIdxs = []int32{
-	2, // 0: dbservice.GetAllTodosResponse.todos:type_name -> dbservice.Todo
-	0, // 1: dbservice.DBService.GetAllTodos:input_type -> dbservice.GetAllTodosRequest
-	1, // 2: dbservice.DBService.GetAllTodos:output_type -> dbservice.GetAllTodosResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	4, // 0: dbservice.GetAllTodosResponse.todos:type_name -> dbservice.Todo
+	4, // 1: dbservice.CreateTodoResponse.todo:type_name -> dbservice.Todo
+	0, // 2: dbservice.DBService.GetAllTodos:input_type -> dbservice.GetAllTodosRequest
+	2, // 3: dbservice.DBService.CreateTodo:input_type -> dbservice.CreateTodoRequest
+	1, // 4: dbservice.DBService.GetAllTodos:output_type -> dbservice.GetAllTodosResponse
+	3, // 5: dbservice.DBService.CreateTodo:output_type -> dbservice.CreateTodoResponse
+	4, // [4:6] is the sub-list for method output_type
+	2, // [2:4] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_dbservice_dbservice_proto_init() }
@@ -228,7 +333,7 @@ func file_dbservice_dbservice_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_dbservice_dbservice_proto_rawDesc), len(file_dbservice_dbservice_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
